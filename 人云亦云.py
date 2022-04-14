@@ -16,51 +16,53 @@ from PIL import Image, ImageFont, ImageDraw, ImageOps
 
 
 def getText(file):
-    news_text=""
+    materialTest=""
     try:
        f = open(file,encoding="utf-8")
        lines = f.readlines()
        
        for i in range(len(lines)):
-          news_text+='.'.join(lines)
+          isSelect = random.randint(0,1)
+          if isSelect==1 :
+              materialTest+='.'.join(lines)
     except:
        print("文件读取错误！")
 
-    return news_text
+    return materialTest
 
 # 根据生成的字体图
 def make_cloud(fileName):
-# 设置新闻文本根目录、图像路径
-    newsfile = r'.\美.txt'
-    img_path = '.\\'+fileName+'.jpg'
-    stop_word_path = r'.\stopword.txt'
-    my_word_path = r'.\myword.txt'
+    # 词云材料,背景轮廓,自定描述
+    materialFile = r'.\material\美.txt'
+    bgImg = r'.\\'+fileName+'.jpg'
+    stop_word_path = r'.\material\stopword.txt'
+    my_word_path = r'.\material\myword.txt'
     
     
     # 读取文件
-    stopword_list = open(stop_word_path, encoding='utf-8').readlines()
-    stopword_list=[s.strip("\n") for s in stopword_list]
-    bg_img = imread(img_path)
-    news_text = getText(newsfile)
+    stopwordList = open(stop_word_path, encoding='utf-8').readlines()
+    stopwordList=[s.strip("\n") for s in stopwordList]
+    bg_img = imread(bgImg)
+    materialTest = getText(materialFile)
     
     # 设置停用词
-    stop_words = set(stopword_list)
-    #print('停用词:', stop_words)
+    stop_words = set(stopwordList)
+    print('停用词:', stop_words)
     
-    # 加载自定义词库
+    # 加载自定义
     jieba.load_userdict(my_word_path)
     
     # 切分文本
-    seg_list = jieba.cut(news_text)
-    segs=[s for s in seg_list if len(s)>=2 ]
+    seg_list = jieba.cut(materialTest)
+    segs = [s for s in seg_list if len(s)>=2 ]
     seg_space = ' '.join(segs)
     
     # 随机选一款字体
     randomFont = str(random.randint(1, 29)) + '.ttf'
     # 生成词云，font_path需指向中文字体以避免中文变成方框，若出现非方框的乱码则为txt读取时的编码选择错误
-    wc = WordCloud(font_path='.\\font\\'+randomFont, max_words=800, \
-                   random_state=42,background_color='white', stopwords=stop_words,  #可以在这里指定停用词
-                   mask=bg_img,max_font_size=100, scale=5, collocations=False).generate(seg_space)
+    wc = WordCloud(font_path='.\\font\\'+randomFont, max_words=200, \
+                   random_state=42,background_color='white', 
+                   mask=bg_img,max_font_size=100, scale=10, collocations=False).generate(seg_space)
     plt.imshow(wc)
     plt.axis("off")
     plt.show()
@@ -105,7 +107,7 @@ def CreatePic(text, size=[1920,1080],margin=5,
 
 if __name__ == "__main__":
     # centerWord = input("请输入你要夸的对象:")  
-    for i in ["哈","哈哈","哈哈哈hhhhhhhh","a","ab","abc","abcd"]:
+    for i in ["泥烟",]:
         CreatePic(i)
         make_cloud(i)
     
