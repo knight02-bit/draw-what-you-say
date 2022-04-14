@@ -8,6 +8,7 @@ Created on Wed Apr 13 17:09:41 2022
 import jieba
 import os
 import math
+import random
 import matplotlib.pyplot as plt
 from imageio import imread
 from wordcloud import WordCloud, ImageColorGenerator
@@ -30,7 +31,7 @@ def getText(file):
 # 根据生成的字体图
 def make_cloud(fileName):
 # 设置新闻文本根目录、图像路径
-    newsfile = r'.\帅.txt'
+    newsfile = r'.\美.txt'
     img_path = '.\\'+fileName+'.jpg'
     stop_word_path = r'.\stopword.txt'
     my_word_path = r'.\myword.txt'
@@ -54,8 +55,10 @@ def make_cloud(fileName):
     segs=[s for s in seg_list if len(s)>=2 ]
     seg_space = ' '.join(segs)
     
+    # 随机选一款字体
+    randomFont = str(random.randint(1, 29)) + '.ttf'
     # 生成词云，font_path需指向中文字体以避免中文变成方框，若出现非方框的乱码则为txt读取时的编码选择错误
-    wc = WordCloud(font_path='.\HYYuanRongTiW.ttf', max_words=800, \
+    wc = WordCloud(font_path='.\\font\\'+randomFont, max_words=800, \
                    random_state=42,background_color='white', stopwords=stop_words,  #可以在这里指定停用词
                    mask=bg_img,max_font_size=100, scale=5, collocations=False).generate(seg_space)
     plt.imshow(wc)
@@ -65,17 +68,15 @@ def make_cloud(fileName):
     # 保存结果
     wc.to_file('.\\'+fileName+'之云.jpg')
 
-def CreatePic(text,
-              size=[1920,1080],
-              margin=5,
-              bgRGB=[255,255,255],
-              fontType=r'.\HYYuanRongTiW.ttf',
-              fontRGB=[0,0,0]):
+def CreatePic(text, size=[1920,1080],margin=5,
+              bgRGB=[255,255,255],fontRGB=[0,0,0]):
 
     size = tuple(size)
     bgRGB = tuple(bgRGB)
     fontRGB = tuple(fontRGB)
-
+    randomFont = str(random.randint(1, 29)) + '.ttf'
+    fontType = '.\\font\\'+randomFont
+    
     iW, iH = size # 画布高宽
     imageTmp = Image.new('RGB', size, bgRGB) # 设置画布大小及背景色
 
