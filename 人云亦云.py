@@ -2,7 +2,7 @@
 """
 Created on Wed Apr 13 17:09:41 2022
 
-@author: Knight
+@author: Knight02
 """
 
 import jieba
@@ -74,6 +74,7 @@ def CreatePic(text, size=[1920,1080],margin=5,
     size = tuple(size)
     bgRGB = tuple(bgRGB)
     fontRGB = tuple(fontRGB)
+    # 随机选一款字体
     randomFont = str(random.randint(1, 29)) + '.ttf'
     fontType = '.\\font\\'+randomFont
     
