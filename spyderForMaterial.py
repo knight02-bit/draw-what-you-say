@@ -46,4 +46,8 @@ def get_text(kindName, kind_char='a'):
         # 注意:不能用select选择"cont", 因为会有其他东西混进来
         poemList += re.findall(r'<a.*?href="/mingju/juv.*?">(.*?)</a>',res2.text)
         
-    return poemList
+    poemText = ''
+    for i in poemList:
+        poemText += i
+        
+    return poemText

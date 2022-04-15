@@ -33,9 +33,9 @@ def getText(file):
     return materialTest
 
 # 根据生成的字体图
-def make_cloud(fileName):
+def make_cloud(fileName, poemText):
     # 词云材料,背景轮廓,自定描述
-    materialFile = r'.\material\美.txt'
+    # materialFile = r'.\material\美.txt'
     bgImg = r'.\\'+fileName+'.jpg'
     stop_word_path = r'.\material\stopword.txt'
     my_word_path = r'.\material\myword.txt'
@@ -45,23 +45,23 @@ def make_cloud(fileName):
     stopwordList = open(stop_word_path, encoding='utf-8').readlines()
     stopwordList=[s.strip("\n") for s in stopwordList]
     bg_img = imread(bgImg)
-    materialTest = getText(materialFile)
+    # materialTest = getText(materialFile)
     
     # 设置停用词
     stop_words = set(stopwordList)
-    print('停用词:', stop_words)
     
     # 加载自定义
     jieba.load_userdict(my_word_path)
     
     # 切分文本
-    seg_list = jieba.cut(materialTest)
+    seg_list = jieba.cut(poemText)
     segs = [s for s in seg_list if len(s)>=2 ]
     seg_space = ' '.join(segs)
     
     # 随机选一款字体
     randomFont = str(random.randint(1, 29)) + '.ttf'
-    # 生成词云，font_path需指向中文字体以避免中文变成方框，若出现非方框的乱码则为txt读取时的编码选择错误
+    # 生成词云，font_path需指向中文字体以避免中文变成方框
+    # 若出现非方框的乱码则为txt读取时的编码选择错误
     wc = WordCloud(font_path='.\\font\\'+randomFont, max_words=200, \
                    random_state=42,background_color='white', 
                    mask=bg_img,max_font_size=100, scale=10, collocations=False).generate(seg_space)
@@ -96,11 +96,10 @@ def CreatePic(text, size=[1920,1080],margin=5,
     # 偏移量
     oW, oH = font.getoffset(text)
 
-
     # 绘制最终图片
     imageRes = Image.new('RGB', (fW, fH), bgRGB)
     drawRes = ImageDraw.Draw(imageRes)
-    print(fW, fH, iW, iH)
+    # print(fW, fH, iW, iH)
     # 绘制文字
     fontx = (iW - fW - oW*10) / 100
     fonty = (iH - fH - oH*10) / 50
@@ -110,13 +109,16 @@ def CreatePic(text, size=[1920,1080],margin=5,
 if __name__ == "__main__":
     # centerWord = input("请输入你要夸的对象:")  
     for i in range(0,3):
-        centerWord = input("请输入你要夸的对象:")  
+        centerWord = input("请输入你要夸的对象:")
+        CreatePic(centerWord)
+        
         menu = spyder.get_menu()
         print(menu)
         print("请从以上风格选择"+centerWord+"的\"云\"的风格:")
         cloudKind = input()
         # cloudKind = cloudKind.strip('\n')
         if cloudKind in menu:
+            # 不同大类的url属性不同,需要预判
             if cloudKind in menu[0:81]:
                 kind_char = 't'
             elif cloudKind in menu[81:126]:
@@ -125,7 +127,8 @@ if __name__ == "__main__":
                 kind_char = 'c'
             else:
                 kind_char = 'x'
-            print(spyder.get_text(cloudKind, kind_char))
+            poemText = spyder.get_text(cloudKind, kind_char)
+            make_cloud(centerWord, poemText)
             
         else:
             print("该风格不存在!")  
