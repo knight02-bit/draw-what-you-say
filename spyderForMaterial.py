@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 import requests
 import lxml
 import re
@@ -24,6 +23,7 @@ def get_menu():
 # 爬取对应类型诗句的前两页(需不超过本身页数)
 # 在爬取前需判断素材是否存在
 def get_text(kindName, kind_char='a'):
+    print("素材爬取中...")
     basic_url = "https://so.gushiwen.cn/mingjus/default.aspx?{kc}str="+kindName
     
     res1 = requests.get(basic_url)
