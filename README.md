@@ -2,7 +2,7 @@
 
 > @author: **[Knight02](https://gitee.com/knight-02)** 
 
-> *古人云,* 
+> *听古人云,* 
 >
 > *跨越古今,* 
 >
