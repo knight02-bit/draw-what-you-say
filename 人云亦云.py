@@ -117,7 +117,16 @@ if __name__ == "__main__":
         cloudKind = input()
         # cloudKind = cloudKind.strip('\n')
         if cloudKind in menu:
-            print(spyder.get_text(cloudKind))
+            if cloudKind in menu[0:81]:
+                kind_char = 't'
+            elif cloudKind in menu[81:126]:
+                kind_char = 'a'
+            elif cloudKind in menu[126:138]:
+                kind_char = 'c'
+            else:
+                kind_char = 'x'
+            print(spyder.get_text(cloudKind, kind_char))
+            
         else:
             print("该风格不存在!")  
         # t = os.system("cls")

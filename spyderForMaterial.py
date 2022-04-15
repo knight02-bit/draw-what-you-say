@@ -23,8 +23,8 @@ def get_menu():
 
 # 爬取对应类型诗句的前两页(需不超过本身页数)
 # 在爬取前需判断素材是否存在
-def get_text(kindName):
-    basic_url = "https://so.gushiwen.cn/mingjus/default.aspx?astr="+kindName
+def get_text(kindName, kind_char='a'):
+    basic_url = "https://so.gushiwen.cn/mingjus/default.aspx?{kc}str="+kindName
     
     res1 = requests.get(basic_url)
     res1.encoding = res1.apparent_encoding
@@ -35,7 +35,7 @@ def get_text(kindName):
     
     poemList = []
     for i in range(1, endPage+1):
-        url_1 = basic_url+"&page="+str(i)
+        url_1 = basic_url.format(kc=kind_char)+"&page="+str(i)
         res2 = requests.get(url_1)
         res2.encoding = res2.apparent_encoding
         
