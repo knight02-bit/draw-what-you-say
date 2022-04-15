@@ -38,10 +38,7 @@ def get_text(kindName, kind_char='a'):
         url_1 = basic_url.format(kc=kind_char)+"&page="+str(i)
         res2 = requests.get(url_1)
         res2.encoding = res2.apparent_encoding
-        
-        # sp = BeautifulSoup(res.text, 'lxml')
-        # poem = sp.findall('a', attr={"href":re.compile(r"/mingju/[0-9a-z._]+aspx")})
-        
+
         # 正则匹配含有href="/mingju/juv...形式的a标签内容
         # 注意:不能用select选择"cont", 因为会有其他东西混进来
         poemList += re.findall(r'<a.*?href="/mingju/juv.*?">(.*?)</a>',res2.text)
