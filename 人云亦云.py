@@ -14,6 +14,8 @@ from imageio import imread
 from wordcloud import WordCloud, ImageColorGenerator
 from PIL import Image, ImageFont, ImageDraw, ImageOps
 
+import spyderForMaterial as spyder
+
 
 def getText(file):
     materialTest=""
@@ -107,11 +109,17 @@ def CreatePic(text, size=[1920,1080],margin=5,
 
 if __name__ == "__main__":
     # centerWord = input("请输入你要夸的对象:")  
-    for i in ["泥烟",]:
-        CreatePic(i)
-        make_cloud(i)
+    for i in range(0,3):
+        centerWord = input("请输入你要夸的对象:")  
+        menu = spyder.get_menu()
+        print(menu)
+        print("请从以上风格选择"+centerWord+"的\"云\"的风格:")
+        cloudKind = input()
+        # cloudKind = cloudKind.strip('\n')
+        if cloudKind in menu:
+            print(spyder.get_text(cloudKind))
+        else:
+            print("该风格不存在!")  
+        # t = os.system("cls")
     
-    # make_cloud(centerWord+".jpg")
-    # image = Image.open("2.jpg") # open colour image
-    # image_file = ImageOps.invert(image) # convert image to black and white
-    # image_file.save('3.jpg')
+    
