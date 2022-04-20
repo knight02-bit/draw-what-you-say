@@ -8,14 +8,13 @@ import os
 import PicAndCloud as pc
 import SpyderForMaterial as spyder
 
+# 输出类型列表
 def print_menu(menu):
     for i in range(0, len(menu)):
         if (i+1) % 8 == 0:
             print(menu[i])
-        elif len(menu[i])<3:
-            print(menu[i], end='\t\t')
         else:
-            print(menu[i], end='\t')
+            print("%-10s" % (menu[i]), end='')
 
 def judge_kind(key, menu):
     kind_char = ''

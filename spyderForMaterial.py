@@ -2,6 +2,7 @@
 import requests
 import lxml
 import re
+import urllib3
 from bs4 import BeautifulSoup
 
 # 素材目录
@@ -26,7 +27,9 @@ def get_text(kindName, kind_char='a'):
     print("素材爬取中...")
     basic_url = "https://so.gushiwen.cn/mingjus/default.aspx?{kc}str="+kindName
     
-    res1 = requests.get(basic_url)
+    urllib3.disable_warnings()
+    res1 = requests.get(basic_url, verify=False)
+    
     res1.encoding = res1.apparent_encoding
     sp = BeautifulSoup(res1.text, "lxml")
     
@@ -36,11 +39,9 @@ def get_text(kindName, kind_char='a'):
     poemList = []
     for i in range(1, endPage+1):
         url_1 = basic_url.format(kc=kind_char)+"&page="+str(i)
-        res2 = requests.get(url_1)
-        res2.encoding = res2.apparent_encoding
+        res2 = requests.get(url_1, verify=False)
         
-        # sp = BeautifulSoup(res.text, 'lxml')
-        # poem = sp.findall('a', attr={"href":re.compile(r"/mingju/[0-9a-z._]+aspx")})
+        res2.encoding = res2.apparent_encoding
         
         # 正则匹配含有href="/mingju/juv...形式的a标签内容
         # 注意:不能用select选择"cont", 因为会有其他东西混进来

@@ -8,21 +8,6 @@ from imageio import imread
 from wordcloud import WordCloud, ImageColorGenerator
 from PIL import Image, ImageFont, ImageDraw, ImageOps
 
-# def getText(file):
-#     materialTest = ""
-#     try:
-#        f = open(file, encoding="utf-8")
-#        lines = f.readlines()
-       
-#        for i in range(len(lines)):
-#           isSelect = random.randint(0,1)
-#           if isSelect==1 :
-#               materialTest += '.'.join(lines)
-#     except:
-#        print("文件读取错误！")
-
-#     return materialTest
-
 # 根据生成的字体图
 def make_cloud(fileName, poemText):
     print("云图生成中...")
@@ -42,7 +27,7 @@ def make_cloud(fileName, poemText):
     wc = WordCloud(font_path='.\\font\\'+randomFont, 
                    max_words=200, random_state=42,
                    background_color='white', mask=bg_img,
-                   max_font_size=100, scale=10, collocations=False).generate(seg_space)
+                   max_font_size=200, scale=10, collocations=False).generate(seg_space)
     plt.imshow(wc)
     plt.axis("off")
     plt.show()
