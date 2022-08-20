@@ -33,8 +33,9 @@ def get_text(kindName, kind_char='a'):
     res1.encoding = res1.apparent_encoding
     sp = BeautifulSoup(res1.text, "lxml")
     
-    pageNum = int(sp.select("label#sumPage")[0].text)
-    endPage = min(pageNum, 2)
+    # pageNum = int(sp.select("label#sumPage")[0].text)
+    # endPage = min(pageNum, 2)
+    endPage = 2
     
     poemList = []
     for i in range(1, endPage+1):
